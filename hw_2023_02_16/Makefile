@@ -20,16 +20,16 @@ clean:
 	rm -f $(OBJS) $(TARGET) *.gcov *.gcda *.gcno *.info html -r
 
 test:
-	./$(TARGET) < test1.txt
-	./$(TARGET) < test2.txt
-	./$(TARGET) < test3.txt
-	./$(TARGET) < test4.txt
-	./$(TARGET) < test5.txt
-	./$(TARGET) < test6.txt
-	./$(TARGET) < test7.txt
-	./$(TARGET) < test8.txt
-	./$(TARGET) < test9.txt
-	./$(TARGET) < test10.txt
+	./$(TARGET) < test1.txt;\
+	./$(TARGET) < test2.txt;\
+	./$(TARGET) < test3.txt;\
+	./$(TARGET) < test4.txt;\
+	./$(TARGET) < test5.txt;\
+	./$(TARGET) < test6.txt;\
+	./$(TARGET) < test7.txt;\
+	./$(TARGET) < test8.txt;\
+	./$(TARGET) < test9.txt;\
+	./$(TARGET) < test10.txt;\
 
 coverage:
 	lcov --rc lcov_branch_coverage=1 -c -d . -o coverage.info
