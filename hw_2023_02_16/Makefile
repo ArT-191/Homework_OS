@@ -30,6 +30,7 @@ test:
 	./$(TARGET) < test8.txt;\
 	./$(TARGET) < test9.txt;\
 	./$(TARGET) < test10.txt;\
+	./$(TARGET) < test11.txt;\
 
 coverage:
 	lcov --rc lcov_branch_coverage=1 -c -d . -o coverage.info
