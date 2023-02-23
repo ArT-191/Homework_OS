@@ -44,7 +44,7 @@ int main() {
 
     pthread_join(thread, NULL);
 
-    printf("Total characters read: %d\n", num_chars);
+    printf("Number of characters entered:%d\n", num_chars);
 
   
 }
