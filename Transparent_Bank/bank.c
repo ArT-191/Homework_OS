@@ -9,8 +9,6 @@
 #include <sys/shm.h>
 
 
-//#define SHM_FILEPATH "/tmp/shmfile" // Change this to the desired filepath
-
 bank_t *create_bank(size_t num_accounts, int max_balance) {
     int shmid;
     key_t key = ftok(".", 'R');
