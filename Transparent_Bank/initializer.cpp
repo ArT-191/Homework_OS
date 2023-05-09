@@ -22,7 +22,6 @@ int main(int argc, char *argv[]) {
 
     // call the client function
     run_client(bank);
-
-    destroy_bank(bank);
+    
     return EXIT_SUCCESS;
 }
