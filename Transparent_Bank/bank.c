@@ -51,23 +51,6 @@ bank_t *create_bank(size_t num_accounts, int max_balance) {
 }
 
 
-
-void destroy_bank(bank_t *bank) {
-    key_t key = ftok("bank.h", 'R');
-    int shmid = shmget(key, sizeof(bank_t) + bank->num_accounts * sizeof(account_t), 0666);
-    if (shmid == -1) {
-        perror("Error: Failed to get shared memory segment for bank and accounts");
-        return;
-    }
-
-    if (shmctl(shmid, IPC_RMID, NULL) == -1) {
-        perror("Error: Failed to delete shared memory segment for bank and accounts");
-        return;
-    }
-
-    printf("Shared memory segment for bank and accounts has been deleted\n");
-}
-
 void display_balance(const bank_t *bank, size_t account_num) {
     if (account_num >= bank->num_accounts) {
         printf("Error: Invalid account number\n");
