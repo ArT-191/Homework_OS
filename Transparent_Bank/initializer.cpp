@@ -2,8 +2,6 @@
 #include <cstdlib>
 #include <iostream>
 
-void run_client(bank_t *bank);
-
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         std::cerr << "Usage: " << argv[0] << " <num_accounts> <max_balance>" << std::endl;
@@ -20,8 +18,6 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
-    // call the client function
-    run_client(bank);
-    
+
     return EXIT_SUCCESS;
 }

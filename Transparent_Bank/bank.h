@@ -26,7 +26,7 @@ struct account {
 
 struct bank {
     size_t num_accounts;
-    account_t *accounts;
+    account accounts[]; 
 };
 
 #endif

@@ -1,17 +1,30 @@
 #include "bank.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include <sys/shm.h>
+#include <sys/ipc.h>
+#include <iostream>
 
-void destroy_bank(bank_t *bank) {
-    // Free each account in the bank
-    for (size_t i = 0; i < bank->num_accounts; i++) {
-        free(&bank->accounts[i]);
+ void destroy_bank() {   
+    int shmid;
+    key_t key = ftok(".", 'R');
+    if (key == -1) {
+        perror("Error: Failed to generate key with ftok");
+        return ;
     }
 
-    // Free the array of accounts in the bank
-    free(bank->accounts);
+    std::cout << key;
+    
+    // create shared memory segment
+    if ((shmid = shmget(key, 0, 0666)) == -1) {
+        perror("Error: Failed to create shared memory segment for bank and accounts");
+        return ;
+    }
 
-    // Free the bank itself
-    free(bank);
+    shmctl(shmid, IPC_RMID, nullptr);
+    
 }
 
-
+int main(){
+    destroy_bank();
+}

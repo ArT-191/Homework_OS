@@ -38,18 +38,47 @@ bank_t *create_bank(size_t num_accounts, int max_balance) {
 
     // initialize bank and accounts
     bank->num_accounts = num_accounts;
-    bank->accounts = accounts;
+    
 
     for (size_t i = 0; i < num_accounts; i++) {
-        accounts[i].balance = 0;
-        accounts[i].min_balance = 0;
-        accounts[i].max_balance = max_balance;
-        accounts[i].frozen = 0;
+        bank->accounts[i] = account_t{};
+        bank->accounts[i].balance = 0;
+        bank->accounts[i].min_balance = 0;
+        bank->accounts[i].max_balance = max_balance;
+        bank->accounts[i].frozen = 0;
+        
     }
 
     return bank;
 }
+bank_t *connect_bank() {
+    int shmid;
+    key_t key = ftok(".", 'R');
+    if (key == -1) {
+        perror("Error: Failed to generate key with ftok");
+        return NULL;
+    }
 
+    
+    // create shared memory segment
+    if ((shmid = shmget(key, 0, 0666)) == -1) {
+        perror("Error: Failed to create shared memory segment for bank and accounts");
+        return NULL;
+    }
+
+    // attach shared memory segment to process address space
+    void *mem = shmat(shmid, NULL, 0);
+    if (mem == (void *) -1) {
+        perror("Error: Failed to attach shared memory segment for bank and accounts");
+        return NULL;
+    }
+
+    // set pointers for bank and accounts
+    bank_t *bank = (bank_t *) mem;
+    account_t *accounts = (account_t *) ((char *) mem + sizeof(bank_t));
+
+    return bank;
+}
 
 void display_balance(const bank_t *bank, size_t account_num) {
     if (account_num >= bank->num_accounts) {
